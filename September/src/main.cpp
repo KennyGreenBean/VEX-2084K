@@ -185,14 +185,14 @@ void farSafe(){
 	pros::delay(500);
 	intake.stop();
 	chassis.moveDistance(-400, -400, 1100);
-	chassis.turnInertialFast(-217);
+	chassis.turnInertial(-217);
 	chassis.moveDistance(200, 200, 400);
 
 	intake.spinIntake(false);
 	Flaps.set_value(true);
 	chassis.moveDistance(100, 300, 400);
 	Flaps.set_value(false);
-	chassis.turnInertial(10);
+	chassis.turnInertialFast(10);
 	chassis.reset();
 	intake.spinIntake(false);
 	chassis.move(300, 600);
@@ -206,17 +206,18 @@ void farSafe(){
 	chassis.stop();
 
 	chassis.moveDistance(-200, -200, 200);
-	chassis.turnInertialAbsolute(-105);
+	chassis.turnInertialAbsolute(-115);
 	intake.spinIntake(true);
 	chassis.moveForward(2000, 400);
 	chassis.moveDistance(200, 200, 400);
-	pros::delay(400);
+	pros::delay(200);
 	intake.stop();
 	
 	chassis.turnInertialFast(80);
-	chassis.moveForward(800, 400);
-	chassis.turnInertialFast(100);
+	chassis.moveForward(300, 400);
+	chassis.turnInertialFast(90);
 	intake.spinIntake(false);
+	pros::delay(200);
 	Flaps.set_value(true);
 	chassis.move(600, 600);
 	pros::delay(1000);
@@ -349,7 +350,7 @@ void far2(){
 	chassis.turnInertialFast(90);
 
 	intake.spinIntake(false);
-	pros::delay(500);
+	pros::delay(800);
 	chassis.move(600, 600);
 	pros::delay(400);
 	chassis.moveDistance(-100, -100, 50);
@@ -475,18 +476,6 @@ void close(){
 	catapult.brake();
 	intake.brake();
 
-	intake.spinIntake(false);
-	chassis.move(600, 300);
-	pros::delay(1000);
-	intake.stop();
-	chassis.moveDistance(-200, -200, 300);
-	chassis.turnInertial(-45);
-	chassis.moveDistance(-300, -300, 500);
-	chassis.turnInertial(-90);
-	chassis.move(200, 200);
-	pros::delay(300);
-	chassis.stop();
-
 	blooper.set_value(true);
 
 	pros::delay(200);
@@ -499,7 +488,7 @@ void close(){
 
 	chassis.moveDistance(300, 300, 200);
 
-	chassis.turnInertial(-37);
+	chassis.turnInertial(-42);
 
 	chassis.moveDistance(300, 300, 1650);
 
@@ -553,80 +542,15 @@ void skills(){
 	chassis.turnInertial(-70);
 	Flaps.set_value(true);
 	catapult.spin();
-	pros::delay(38000);
+	pros::delay(36000);
 	catapult.stop();
 
 	//-------------------------------------------------------------------------------
 
 	Flaps.set_value(false);
 	chassis.turnInertial(70);
-	chassis.moveForward(650, -300);
+	chassis.moveForward(750, -300);
 	chassis.turnInertial(-50);
-
-	chassis.moveDistance(-300, 	-300, 3300);
-
-	chassis.moveDistance(-300, -80, 1500);
-	chassis.moveDistance(-150, -270, 1500);
-	chassis.moveDistance(-200, -200, 900);
-	chassis.turnInertialFast(-90);
-	chassis.move(-200, -200);
-	pros::delay(500);
-
-	
-	Flaps.set_value(true);
-
-	chassis.move(500, 500);
-
-	pros::delay(1000);
-
-	chassis.stop();
-
-	Flaps.set_value(false);
-
-	chassis.move(-500, -500);
-	pros::delay(1000);
-	chassis.stop();
-	chassis.turnInertial(30);
-	Flaps.set_value(true);
-	chassis.move(400, 600);
-	pros::delay(1000);
-	chassis.stop();
-	Flaps.set_value(false);
-	chassis.move(-400, -400);
-	pros::delay(2000);
-	chassis.stop();
-	chassis.turnInertial(-90);
-	chassis.moveForward(2000, 400);
-	chassis.turnInertial(120);
-	Flaps.set_value(true);
-	chassis.move(500, 500);
-	pros::delay(1000);
-	chassis.moveDistance(-200, -200, 300);
-	Flaps.set_value(false);
-	chassis.stop();
-}
-
-void skills2(){
-	chassis.brake();
-	catapult.brake();
-	intake.brake();
-	ptoSetFalse();
-
-	intak.set_value(false);
-
-	chassis.moveDistance(300, 300, 300);
-	chassis.turnInertial(-70);
-	Flaps.set_value(true);
-	catapult.spin();
-	pros::delay(70000);
-	catapult.stop();
-
-	//-------------------------------------------------------------------------------
-
-	Flaps.set_value(false);
-	chassis.turnInertial(70);
-	chassis.moveForward(700, -300);
-	chassis.turnInertial(-53);
 
 	chassis.moveDistance(-300, 	-300, 3300);
 
@@ -646,14 +570,15 @@ void skills2(){
 	chassis.stop();
 	chassis.move(-200, -200);
 	pros::delay(500);
-	chassis.move(500, 500);
+	chassis.move(600, 600);
 	pros::delay(300);
 	chassis.stop();
+	chassis.reset();
 	Flaps.set_value(false);
 	chassis.move(-300, -300);
 	pros::delay(1000);
 	chassis.stop();
-	chassis.turnInertial(-90);	
+	chassis.turnInertialAbsolute(-90);	//
 	chassis.reset();
 	chassis.moveDistance(300, 300, 1700);
 	chassis.turnInertialAbsolute(130);
@@ -674,9 +599,10 @@ void skills2(){
 }
 
 void autonomous() {
+	intake.brake();
 	ptoSetFalse();
 	intak.set_value(false);
-	// farSafe();
+	farSafe();
 	// far5();
 	// far4();
 	// far3();
@@ -685,7 +611,6 @@ void autonomous() {
 	// close();
 	// elimclose();
 	// skills();
-	skills2();
 }
 
 /**
@@ -704,6 +629,7 @@ void autonomous() {
 
 
 void opcontrol() {
+	intake.brake();
 	ptoSetFalse();
 	chassis.brake();
 	catapult.brake();
